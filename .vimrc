@@ -76,7 +76,6 @@ set shiftwidth=2
 set noexpandtab     
 set textwidth=0     
 set cmdheight=1
-set textwidth=75
                     
 syntax on
 set hlsearch
