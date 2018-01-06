@@ -1,0 +1,64 @@
+[[plugins]]
+	repo = 'mattn/calendar-vim'
+	hook_add = '''
+		nnoremap ]cc :Calendar<CR>
+		nnoremap ]ca :Calc<CR>
+	'''
+
+[[plugins]]
+	repo = 'mattn/sonictemplate-vim'
+	hook_add = '''
+		nnoremap te :Template<Space>
+	'''
+
+[[plugins]]
+	repo = 'tpope/vim-surround'
+
+[[plugins]]
+	repo = 'kannokanno/previm'
+	hook_add = '''
+		let g:previm_open_cmd = 'open -a Google\ Chrome'
+	'''
+
+[[plugins]]
+	repo = 'tyru/open-browser.vim'
+
+[[plugins]]
+	repo = 'vim-scripts/taglist.vim'
+	hook_add = '''
+		"let Tlist_Show_One_File = 1
+		let Tlist_Use_Right_Window = 1
+		let Tlist_Exit_OnlyWindow = 1
+		" let g:titlestring=%<%f\ %([%{Tlist_Get_Tagname_By_Line()}]%)
+	'''
+
+[[plugins]]
+	repo = 'luochen1990/rainbow'
+	hook_add = '''
+		" let g:rbpt_max = 7
+		" let g:rbpt_loadcmd_toggle = 0
+		nnoremap ]r :RainbowToggle<CR>
+		let g:rainbow_active = 0 " disable at first
+		let g:rainbow_conf = {
+		    \   'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+		    \   'ctermfgs': ['red', 'darkblue', 'darkmagenta', 'darkcyan'],
+		    \   'operators': '_,_',
+		    \   'parentheses': [['(',')'], ['\[','\]'], ['{','}']],
+		    \   'separately': {
+		    \       '*': {},
+		    \       'lisp': {
+		    \           'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+		    \           'ctermfgs': ['darkgray', 'darkblue', 'darkmagenta', 'darkcyan', 'darkred', 'darkgreen'],
+		    \       },
+		    \       'vim': {
+		    \           'parentheses': [['fu\w* \s*.*)','endfu\w*'], ['for','endfor'], ['while', 'endwhile'], ['if','_elseif\|else_','endif'], ['(',')'], ['\[','\]'], ['{','}']],
+		    \       },
+		    \       'tex': {
+		    \           'parentheses': [['(',')'], ['\[','\]'], ['\\begin{.*}','\\end{.*}']],
+		    \       },
+		    \       'css': 0,
+		    \       'stylus': 0,
+		    \   }
+		    \}
+		" (((((((()))))))){{{}}}
+	'''
