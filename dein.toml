@@ -61,18 +61,48 @@
 	repo = 'vim-scripts/Solarized' 
 
 [[plugins]]
+	repo = 'airblade/vim-gitgutter'
+
+[[plugins]]
+	repo = 'tpope/vim-fugitive'
+	hook_add = '''
+		nnoremap GB :Gblame<CR>
+	'''
+
+[[plugins]]
 	repo = 'itchyny/lightline.vim'
 	hook_add = '''
 		let g:lightline = { 
 					\ 'active': {
-					\   'left': [ ['mode', 'paste'], ['readonly','filename', 'fugitive', 'modified'] ]
+					\   'left': [ ['mode', 'paste'], ['readonly','filename',
+					\             'git', 'modified'] ]
 					\ }, 
 					\ 'component_function': {
-					\   'fugitive': 'ShowBranch' 
+					\   'git': 'ShowGitStatus'
 					\ }
 					\ }
 		function! ShowBranch()
 			return fugitive#statusline()
+		endfunction
+		function! ShowStatus()
+			if !get(g:, 'gitgutter_enabled', 0)
+				return ''
+			endif
+		  let hunks = GitGutterGetHunkSummary()
+			let symbols = [ '+', '~', '-' ]
+		  let ret = []
+		  for i in [0, 1, 2]
+		    if hunks[i] > 0
+		      call add(ret, symbols[i] . hunks[i])
+		    endif
+		  endfor
+		  return join(ret, ' ')
+		endfunction
+		function! ShowGitStatus()
+			if !exists('b:git_dir')
+				return ''
+			endif
+			return ShowBranch() . ' ' . ShowStatus()
 		endfunction
 		
 		set laststatus=2   " Always show the statusline

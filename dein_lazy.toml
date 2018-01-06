@@ -214,6 +214,3 @@
 
 [[plugins]]
 	repo = 'vim-scripts/gtags.vim'
-
-[[plugins]]
-	repo = 'tpope/vim-fugitive'

@@ -4,17 +4,17 @@ if &compatible
 endif
 
 " fetch dein if not exists
-if !isdirectory(expand('~/.vim/dein'))
-  let s:dein_repo_dir = '~/.vim/dein/repos/github.com/Shougo/dein.vim'
+if !isdirectory(expand('~/.cache/repos/github.com/Shougo/dein.vim'))
+  let s:dein_repo_dir = '~/.cache/repos/github.com/Shougo/dein.vim'
 	execute '!mkdir -p ' . s:dein_repo_dir
 	execute '!git clone https://github.com/Shougo/dein.vim ' . s:dein_repo_dir
 endif
 
-let s:dein_base = expand('~/.vim/dein')
-let s:toml = expand('~/.vim/dein.toml')
-let s:toml_lazy = expand('~/.vim/dein_lazy.toml')
-let s:toml_misc = expand('~/.vim/dein_misc.toml')
-set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
+let s:dein_base = expand('~/.cache')
+let s:toml = expand('~/.config/vim/dein.toml')
+let s:toml_lazy = expand('~/.config/vim/dein_lazy.toml')
+let s:toml_misc = expand('~/.config/vim/dein_misc.toml')
+set runtimepath+=~/.cache/repos/github.com/Shougo/dein.vim
 
 if dein#load_state(s:dein_base)
 	call dein#begin(s:dein_base)
@@ -112,7 +112,6 @@ endif
 " set statusline=%<%F\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).(&bomb?':BOM':'').']['.&ff.']'}%=\ %v,%l\ %L\%8P\ 
 
 """"" key remap
-nnoremap ,<space> :e ~/.vimrc<CR> 
 nnoremap ,<space> :e ~/.vimrc<CR> 
 nnoremap ,s :source ~/.vimrc<CR>
 
