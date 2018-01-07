@@ -1,0 +1,140 @@
+[[plugins]]
+	repo = 'Shougo/neomru.vim'
+
+[[plugins]]
+	repo = 'Shougo/denite.nvim'
+	depends = ['neomru.vim']
+	hook_add = '''
+		nnoremap su :<C-u>Denite -mode=normal file_mru buffer<CR>
+		nnoremap sa :<C-u>Denite -mode=normal file_rec<CR>
+		nnoremap sf :<C-u>Denite -mode=normal -buffer-name=files file_rec<CR>
+		nnoremap sc :<C-u>Denite -mode=normal file<CR>
+		nnoremap sm :<C-u>Denite -mode=normal change -winheight=15 -no-quit -keep-focus<CR>
+		nnoremap sb :<C-u>Denite -mode=normal buffer<CR>
+		nnoremap so :<C-u>Denite -mode=normal outline -winheight=15 -no-quit<CR>
+		nnoremap sl :<C-u>Denite -mode=normal line -winheight=15 -no-quit -input=
+		nnoremap sL :<C-u>DeniteCursorWord -mode=normal line -winheight=15 -no-quit<CR>
+		nnoremap sj :<C-u>Denite -mode=normal -winheight=15 -no-quit jump<CR>
+		nnoremap st :<C-u>Denite -mode=normal tag -start-insert<CR>
+		nnoremap sG :<C-u>DeniteCursorWord -mode=normal gtags_def -no-quit<CR>
+		nnoremap sR :<C-u>DeniteCursorWord -mode=normal gtags_ref -no-quit<CR>
+		nnoremap sC :<C-u>DeniteCursorWord -mode=normal gtags_context -no-quit<CR>
+		nnoremap sg :<C-u>Denite grep -mode=normal -input=<CR>
+		nnoremap sp :<C-u>DeniteProjectDir grep -mode=normal -input=<CR>
+		nnoremap sd :<C-u>Denite -quit<CR>
+		nnoremap sr :<C-u>Denite -resume<CR>
+	'''
+	hook_post_source = '''
+		call denite#custom#option('default', 'direction', 'top')
+		call denite#custom#option('default', 'prompt', '>')
+		call denite#custom#map('normal', 'l', '<CR>')
+		call denite#custom#map('normal', 'h', '<denite:move_up_path>', 'noremap')
+		call denite#custom#map('normal', 'S', '<denite:do_action:split>', 'noremap')
+		call denite#custom#map('normal', 'V', '<denite:do_action:vsplit>', 'noremap')
+		call denite#custom#map('insert', 'S', '<denite:do_action:split>', 'noremap')
+		call denite#custom#map('insert', 'V', '<denite:do_action:vsplit>', 'noremap')
+
+		" use rg instead of grep
+		if executable('rg')
+	    call denite#custom#var('file_rec', 'command', ['rg', '--files', '--hidden', '--glob', '!.git'])
+			call denite#custom#var('grep', 'command', ['rg'])
+			call denite#custom#var('grep', 'default_opts',
+					\ ['--vimgrep', '--no-heading'])
+			call denite#custom#var('grep', 'recursive_opts', [])
+			call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+			call denite#custom#var('grep', 'separator', ['--'])
+			call denite#custom#var('grep', 'final_opts', [])
+		endif
+	'''
+
+[[plugins]]
+	repo = 'ozelentok/denite-gtags'
+	on_source = ['denite.nvim']
+
+[[plugins]]
+	repo = 'scrooloose/nerdtree'
+	hook_add = '''
+		nnoremap ]v :<C-u>NERDTreeToggle<CR>
+
+		" let g:NERDTreeShowHidden = 1
+		let g:NERDTreeMapOpenSplit = 'S'
+		let g:NERDTreeMapOpenVSplit = 'V'
+		au FileType nerdtree nnoremap <silent> <buffer> h :call nerdtree#ui_glue#invokeKeyMap("u")<CR>
+		au FileType nerdtree nnoremap <silent> <buffer> l :call nerdtree#ui_glue#invokeKeyMap("C")<CR>
+
+		" exit by double ESC key
+		au FileType nerdtree nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
+		au FileType nerdtree inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
+	'''
+
+[[plugins]]
+	repo = 'Xuyuanp/nerdtree-git-plugin'
+	on_source = ['nerdtree']
+
+[[plugins]]
+	repo = 'Shougo/deoplete.nvim'
+	hook_add = '''
+		let g:deoplete#enable_at_startup = 1
+	'''
+
+[[plugins]]
+	repo = 'zchee/deoplete-clang'
+	on_source = ['deoplete.nvim']
+
+[[plugins]]
+	repo = 'zchee/deoplete-jedi'
+	on_source = ['deoplete.nvim']
+
+[[plugins]]
+	repo = 'thinca/vim-quickrun'
+	hook_add = '''
+		let g:quickrun_config = {'*': {'20vsplit': ''}}
+		let g:quickrun_config = {'*': {'hook/time/enable': '1'},}
+		nnoremap ,r :QuickRun<CR> 
+
+		"tex
+		let g:tex_flavor='latex' 
+		let g:quickrun_config = { 'tex' : {'command' : 'platex', 'exec': ['%c %s', 'dvipdfmx %s:r.dvi', 'open %s:r.pdf']} }
+		
+		"html
+		" let g:quickrun_config = { 'html' : {'command' : '', 'exec': ['open %s']} }
+		
+		"markdown
+		let g:quickrun_config['markdown'] = {
+		       \ 'outputter': 'browser'
+		       \ }
+	'''
+
+[[plugins]]
+	repo = 'thinca/vim-ref'
+	hook_add = '''
+		" use lynx for alc
+		let g:ref_alc_cmd='lynx -dump -nonumbers -display_charset=utf-8 %s'
+		" add web dictionary
+		let g:ref_source_webdict_sites = {
+		\ 'wiktionary': {
+		\ 'url': 'http://ja.wiktionary.org/wiki/%s',
+		\ 'keyword_encoding': 'utf-8',
+		\ 'cache': 1,
+		\ },
+		\ 'wikipedia:ja':{
+		\ 'url': 'http://ja.wikipedia.org/wiki/%s',
+		\ 'keyword_encoding': 'utf-8',
+		\ 'cache': 1,
+		\ },
+		\ 'alc':{
+		\ 'url': 'http://eow.alc.co.jp/search?q=%s',
+		\ 'keyword_encoding': 'utf-8',
+		\ 'cache': 1,
+		\ },
+		\ }
+		" output filter (remove first several lines)
+		function! g:ref_source_webdict_sites.wiktionary.filter(output)
+		 return join(split(a:output, "\n")[18 :], "\n")
+		endfunction
+		function! g:ref_source_webdict_sites.alc.filter(output)
+		 return join(split(a:output, "\n")[34 :], "\n")
+		endfunction
+		let g:ref_source_webdict_sites.default = 'wikipedia:ja'
+		nnoremap ,a :Ref webdict alc 
+	'''

@@ -1,0 +1,106 @@
+[[plugins]]
+	repo = 'Shougo/dein.vim'
+
+[[plugins]]
+	repo = 'kana/vim-submode'
+	hook_add = '''
+		" window size
+		call submode#enter_with('move-window', 'n', '', '.w', '<Nop>')
+		call submode#leave_with('move-window', 'n', '', '<Esc>')
+		call submode#map('move-window', 'n', '', 'j', '<C-w>+')
+		call submode#map('move-window', 'n', '', 'k', '<C-w>-')
+		call submode#map('move-window', 'n', '', 'h', '<C-w>>')
+		call submode#map('move-window', 'n', '', 'l', '<C-w><')
+		" window transparency
+		call submode#enter_with('transparency', 'n', '', '.t', '<Nop>')
+		call submode#leave_with('transparency', 'n', '', '<Esc>')
+		call submode#map('transparency', 'n', '', 'k', ':let &transparency += 1<CR>')
+		call submode#map('transparency', 'n', '', 'j', ':let &transparency -= 1<CR>')
+		" window move
+		call submode#enter_with('s', 'n', '', '<Space>j', '<C-d>')
+		call submode#enter_with('s', 'n', '', '<Space>k', '<C-u>')
+		call submode#leave_with('s', 'n', '', '<Esc>')
+		call submode#map ('s', 'n', '', 'j', '<C-d>')
+		call submode#map ('s', 'n', '', 'k', '<C-u>')
+		call submode#map ('s', 'n', '', 'a', ':let &l:scroll -= 3<CR>')
+		call submode#map ('s', 'n', '', 's', ':let &l:scroll += 3<CR>')
+		" history
+		call submode#enter_with('undo/redo', 'n', '', 'g-', 'g-')
+		call submode#enter_with('undo/redo', 'n', '', 'g+', 'g+')
+		call submode#leave_with('undo/redo', 'n', '', '<Esc>')
+		call submode#map('undo/redo', 'n', '', '-', 'g-')
+		call submode#map('undo/redo', 'n', '', '+', 'g+') 
+		let g:submode_timeout = 1
+		let g:submode_timeoutlen = 10000
+	'''
+
+[[plugins]]
+	repo = 'taku-o/vim-toggle'
+	hook_add = '''
+		nmap <C-C> <Plug>ToggleN
+		imap <C-C> <Plug>ToggleI
+		vmap <C-C> <Plug>ToggleV
+	'''
+
+[[plugins]]
+	repo = 'tomtom/tcomment_vim'
+	hook_add = '''
+		nnoremap ,c :TComment<CR>
+		vnoremap ,c :TCommentMaybeInline<CR>
+		vnoremap ,x :TCommentBlock<CR>
+	'''
+
+[[plugins]]
+	repo = 'tomasr/molokai'
+
+[[plugins]]
+	repo = 'vim-scripts/Solarized' 
+
+[[plugins]]
+	repo = 'airblade/vim-gitgutter'
+
+[[plugins]]
+	repo = 'tpope/vim-fugitive'
+	hook_add = '''
+		nnoremap GB :Gblame<CR>
+	'''
+
+[[plugins]]
+	repo = 'itchyny/lightline.vim'
+	hook_add = '''
+		let g:lightline = { 
+					\ 'active': {
+					\   'left': [ ['mode', 'paste'], ['readonly','filename',
+					\             'git', 'modified'] ]
+					\ }, 
+					\ 'component_function': {
+					\   'git': 'ShowGitStatus'
+					\ }
+					\ }
+		function! ShowBranch()
+			return fugitive#statusline()
+		endfunction
+		function! ShowStatus()
+			if !get(g:, 'gitgutter_enabled', 0)
+				return ''
+			endif
+		  let hunks = GitGutterGetHunkSummary()
+			let symbols = [ '+', '~', '-' ]
+		  let ret = []
+		  for i in [0, 1, 2]
+		    if hunks[i] > 0
+		      call add(ret, symbols[i] . hunks[i])
+		    endif
+		  endfor
+		  return join(ret, ' ')
+		endfunction
+		function! ShowGitStatus()
+			if !exists('b:git_dir')
+				return ''
+			endif
+			return ShowBranch() . ' ' . ShowStatus()
+		endfunction
+		
+		set laststatus=2   " Always show the statusline
+		set encoding=utf-8 " Necessary to show Unicode glyphs
+	'''
