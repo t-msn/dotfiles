@@ -93,8 +93,8 @@
 		let g:vimfiler_safe_mode_by_default=0
 		nnoremap ]v :VimFilerBufferDir -split -simple -winwidth=30 -no-quit<CR>
 
-		au FileType vimfiler nnoremap <silent><buffer><expr> vv vimfiler#do_switch_action('vsplit')
-		au FileType vimfiler nnoremap <silent><buffer><expr> ss vimfiler#do_switch_action('split')
+		au FileType vimfiler nnoremap <silent><buffer><expr> V vimfiler#do_switch_action('vsplit')
+		au FileType vimfiler nnoremap <silent><buffer><expr> S vimfiler#do_switch_action('split')
 		
 		" exit by double ESC key
 		au FileType vimfiler nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
