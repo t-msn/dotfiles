@@ -65,3 +65,4 @@ export GOPATH=$HOME/go
 
 ## alias
 alias nv=nvim
+alias c='cd ~'
