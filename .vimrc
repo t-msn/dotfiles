@@ -217,7 +217,7 @@ cnoremap <C-F> <Right>
 
 """"" other settings
 " automatically change carrent directory
-au BufEnter * execute ":lcd " . expand("%:p:h")
+autocm BufEnter * if expand('%:p') !~ '://' | :lchdir %:p:h | endif
 
 augroup vimrcEx
 	autocmd!

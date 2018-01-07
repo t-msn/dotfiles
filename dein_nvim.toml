@@ -65,7 +65,7 @@
 [[plugins]]
 	repo = 'tpope/vim-fugitive'
 	hook_add = '''
-		nnoremap gb :Gblame<CR>
+		nnoremap bl :Gblame<CR>
 	'''
 
 [[plugins]]

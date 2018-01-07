@@ -145,6 +145,10 @@ nnoremap bn :bNext<CR>
 nnoremap bp :bprevious<CR>
 "nnoremap ,b :Buffer<Space>
 
+" tab
+nnoremap tn :tabNext<CR>
+nnoremap tp :tabpevious<CR>
+
 " help
 nnoremap <C-u> :help<Space>
 
@@ -178,7 +182,7 @@ cnoremap <C-F> <Right>
 
 """"" other settings
 " automatically change current directory
-au BufEnter * execute ":lcd " . expand("%:p:h")
+autocm BufEnter * if expand('%:p') !~ '://' | :lchdir %:p:h | endif
 
 " remember last edit position
 augroup vimrcEx

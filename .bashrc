@@ -82,6 +82,9 @@ if [ `which fzy` ]; then
 	alias fin='find . -type f | fzy --lines=100'
 fi
 
+alias gs='git status'
+alias gl='git log'
+
 ## load local config
 if [ -e ~/.bashrc_local ]; then
 	source ~/.bashrc_local
