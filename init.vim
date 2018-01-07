@@ -147,7 +147,7 @@ nnoremap bp :bprevious<CR>
 
 " tab
 nnoremap tn :tabNext<CR>
-nnoremap tp :tabpevious<CR>
+nnoremap tp :tabprevious<CR>
 
 " help
 nnoremap <C-u> :help<Space>
