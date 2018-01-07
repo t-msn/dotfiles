@@ -9,25 +9,27 @@
 		nnoremap sa :<C-u>Denite -mode=normal file_rec<CR>
 		nnoremap sf :<C-u>Denite -mode=normal -buffer-name=files file_rec<CR>
 		nnoremap sc :<C-u>Denite -mode=normal file<CR>
-		nnoremap sm :<C-u>Denite -mode=normal change -winheight=15 -no-quit -keep-focus<CR>
+		nnoremap sm :<C-u>Denite -mode=normal change -winheight=15 -auto-highlight -no-quit -keep-focus<CR>
 		nnoremap sb :<C-u>Denite -mode=normal buffer<CR>
 		nnoremap so :<C-u>Denite -mode=normal outline -winheight=15 -no-quit<CR>
-		nnoremap sl :<C-u>Denite -mode=normal line -winheight=15 -no-quit -input=
-		nnoremap sL :<C-u>DeniteCursorWord -mode=normal line -winheight=15 -no-quit<CR>
-		nnoremap sj :<C-u>Denite -mode=normal -winheight=15 -no-quit jump<CR>
+		nnoremap sl :<C-u>Denite -mode=normal line -winheight=15 -auto-highlight -input=
+		nnoremap sL :<C-u>DeniteCursorWord -mode=normal line -winheight=15 -auto-highlight<CR>
+		nnoremap sj :<C-u>Denite -mode=normal -winheight=15 -auto-highlight -no-quit jump<CR>
 		nnoremap st :<C-u>Denite -mode=normal tag -start-insert<CR>
-		nnoremap sG :<C-u>DeniteCursorWord -mode=normal gtags_def -no-quit<CR>
-		nnoremap sR :<C-u>DeniteCursorWord -mode=normal gtags_ref -no-quit<CR>
-		nnoremap sC :<C-u>DeniteCursorWord -mode=normal gtags_context -no-quit<CR>
-		nnoremap sg :<C-u>Denite grep -mode=normal -input=<CR>
+		nnoremap sG :<C-u>DeniteCursorWord -mode=normal -auto-highlight gtags_def<CR>
+		nnoremap sR :<C-u>DeniteCursorWord -mode=normal -auto-highlight gtags_ref<CR>
+		nnoremap sC :<C-u>DeniteCursorWord -mode=normal -auto-highlight gtags_context<CR>
+		nnoremap sg :<C-u>Denite grep -mode=normal -auto-highlight -input=<CR>
 		nnoremap sp :<C-u>DeniteProjectDir grep -mode=normal -input=<CR>
-		nnoremap sd :<C-u>Denite -quit<CR>
-		nnoremap sr :<C-u>Denite -resume<CR>
+		" nnoremap sd :<C-u>Denite -quit<CR>
+		nnoremap sr :<C-u>Denite -mode=normal -resume<CR>
 	'''
 	hook_post_source = '''
 		call denite#custom#option('default', 'direction', 'top')
 		call denite#custom#option('default', 'prompt', '>')
 		call denite#custom#map('normal', 'l', '<CR>')
+		call denite#custom#map('normal', '<C-j>', '<C-w>j')
+		call denite#custom#map('normal', '<C-k>', '<C-w>k')
 		call denite#custom#map('normal', 'h', '<denite:move_up_path>', 'noremap')
 		call denite#custom#map('normal', 'S', '<denite:do_action:split>', 'noremap')
 		call denite#custom#map('normal', 'V', '<denite:do_action:vsplit>', 'noremap')
