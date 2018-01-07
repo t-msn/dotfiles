@@ -58,6 +58,9 @@
 
 [[plugins]]
 	repo = 'airblade/vim-gitgutter'
+	hook_add = '''
+		nnoremap gp :GitGutterPreviewHunk<CR> 
+	'''
 
 [[plugins]]
 	repo = 'tpope/vim-fugitive'

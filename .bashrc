@@ -8,10 +8,21 @@ function __show_status () {
 }
 
 # show git branch name at PS1
-source /usr/share/doc/git/contrib/completion/git-prompt.sh
-source /usr/share/doc/git/contrib/completion/git-completion.bash
-GIT_PS1_SHOWDIRTYSTATE=true
-export PS1='\[\033[32m\]\u@\h\[\033[00m\]:\[\033[34m\]\w\[\033[31m\]$(__git_ps1)\[\033[00m\]\[\033[31m\]$(__show_status)\[\033[00m\]\$ '
+if [ -e /usr/share/doc/git/contrib/completion/git-prompt.sh ]; then # linux (fedora)
+	source /usr/share/doc/git/contrib/completion/git-prompt.sh
+	source /usr/share/doc/git/contrib/completion/git-completion.bash
+
+	GIT_PS1_SHOWDIRTYSTATE=true
+	export PS1='\[\033[32m\]\u@\h\[\033[00m\]:\[\033[34m\]\w\[\033[31m\]$(__git_ps1)\[\033[00m\]\[\033[31m\]$(__show_status)\[\033[00m\]\$ '
+elif [ -e /usr/local/etc/bash_completion.d/git-prompt.sh ]; then # mac (brew)
+	source /usr/local/etc/bash_completion.d/git-prompt.sh
+	source /usr/local/etc/bash_completion.d/git-completion.bash
+
+	GIT_PS1_SHOWDIRTYSTATE=true
+	export PS1='\[\033[32m\]\u@\h\[\033[00m\]:\[\033[34m\]\w\[\033[31m\]$(__git_ps1)\[\033[00m\]\[\033[31m\]$(__show_status)\[\033[00m\]\$ '
+else
+	export PS1='\[\033[32m\]\u@\h\[\033[00m\]:\[\033[34m\]\w\[\033[31m\]$(__show_status)\[\033[00m\]\$ '
+fi
 
 # change tmux window name to it's runnning command name
 case "${TERM}" in
@@ -49,6 +60,7 @@ if [ `which fzy` ]; then
 	bind -x '"\C-r": select-history'
 fi
 
+## enable bash options
 shopt -s autocd
 shopt -s direxpand
 shopt -s dirspell
@@ -66,3 +78,11 @@ export GOPATH=$HOME/go
 ## alias
 alias nv=nvim
 alias c='cd ~'
+if [ `which fzy` ]; then 
+	alias fin='find . -type f | fzy --lines=100'
+fi
+
+## load local config
+if [ -e ~/.bashrc_local ]; then
+	source ~/.bashrc_local
+fi
