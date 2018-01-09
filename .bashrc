@@ -56,14 +56,42 @@ shopt -s histappend
 # After each command, append to the history file and reread it
 export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
 # use filter command (fzy) for C-r
-if [ `which fzy` ]; then 
+unalias fzf
+if [ `which fzf` ]; then 
 	function select-history() {
 	  # declare l=$(HISTTIMEFORMAT= history | sort -k1,1nr | perl -ne 'BEGIN { my @lines = (); } s/^\s*\d+\s*//; $in=$_; if (!(grep {$in eq $_} @lines)) { push(@lines, $in); print $in; }' | peco --layout=bottom-up --query "$READLINE_LINE")
-	  declare l=$(HISTTIMEFORMAT= history | sort -k1,1nr | perl -ne 'BEGIN { my @lines = (); } s/^\s*\d+\s*//; $in=$_; if (!(grep {$in eq $_} @lines)) { push(@lines, $in); print $in; }' | fzy --query "$READLINE_LINE")
+	  # declare l=$(HISTTIMEFORMAT= history | sort -k1,1nr | perl -ne 'BEGIN { my @lines = (); } s/^\s*\d+\s*//; $in=$_; if (!(grep {$in eq $_} @lines)) { push(@lines, $in); print $in; }' | fzy --query "$READLINE_LINE")
+	  declare l=$(HISTTIMEFORMAT= history | sort -k1,1nr | perl -ne 'BEGIN { my @lines = (); } s/^\s*\d+\s*//; $in=$_; if (!(grep {$in eq $_} @lines)) { push(@lines, $in); print $in; }' | fzf --reverse --tiebreak=index --height=15 --query "$READLINE_LINE")
 		READLINE_LINE="$l"
 		READLINE_POINT=${#l}
 	}
 	bind -x '"\C-r": select-history'
+
+	# select git local branch
+	fbr() {
+		local branches branch
+	  branches=$(git branch --all | grep -v HEAD) &&
+	  branch=$(echo "$branches" |
+			fzf-tmux --ansi --reverse -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+		git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+	}
+
+	# create local branch from tag
+	fbt() {
+		local tags tag 
+		tags=$(git tag) &&
+	  tag=$(echo "$tags" | sort -t . -k1,1 -k2,2n | # sort by version
+			fzf-tmux --ansi --reverse --tac -d $(( 2 + $(wc -l <<< "$tags") )) +m)
+
+		ret=$(git branch | grep -q "$tag-local")
+		if [ $? -eq 0 ]; then
+			git checkout $tag-local
+		else 
+			echo 'create new local branch'
+			git checkout -B $tag-local $tag
+		fi
+	}
+
 fi
 
 ## enable bash options
@@ -76,6 +104,7 @@ shopt -s nocaseglob
 stty stop undef
 
 ## use enhancd if available
+export ENHANCD_FILTER="fzf --reverse --height=15:fzy:peco"
 if [ -e ~/src/enhancd/init.sh ];then
 	source ~/src/enhancd/init.sh
 fi
@@ -87,9 +116,6 @@ export GOPATH=$HOME/go
 alias vi=vim
 alias nv=nvim
 alias c='cd ~'
-if [ `which fzy` ]; then 
-	alias fin='find . -type f | fzy --lines=100'
-fi
 
 alias ga='git add'
 alias gc='git commit'
@@ -113,6 +139,8 @@ alias grep='grep --with-filename --line-number --color=always'
 alias ..='$cd ..'
 alias ...='$cd ../..'
 alias cdp='cd $(git rev-parse --show-toplevel)'
+
+alias fzf='fzf --reverse'
 
 ## completion
 if [ -e /usr/share/bash-completion/bash_completion ]; then

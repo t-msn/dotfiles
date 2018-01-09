@@ -10,7 +10,8 @@ if [ -e /etc/fedora-release ]; then
 
 	sudo dnf copr enable carlwgeorge/ripgrep
 	sudo dnf -y install ripgrep
-	sudo dnf -y install https://github.com/jhawthorn/fzy/releases/download/0.9/fzy-0.9-1.x86_64.rpm
+	sudo dnf install fzf
+	# sudo dnf -y install https://github.com/jhawthorn/fzy/releases/download/0.9/fzy-0.9-1.x86_64.rpm
 
 	mkdir src
 	git clone https://github.com/b4b4r07/enhancd.git src/enhancd
