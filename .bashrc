@@ -97,8 +97,14 @@ alias gd='git diff'
 alias gs='git status'
 alias gl='git log'
 
-alias ls='ls -axF --color=always'
-alias ll='ls -axl'
+if [ $(uname) == 'Darwin' ]; then
+	alias ls='ls -axFG' # mac
+else
+	alias ls='ls -axF --color=always'
+fi
+alias ll='ls -axlh'
+
+alias df='df -h'
 
 alias less='less -R'
 export LESSOPEN='| /usr/bin/src-hilite-lesspipe.sh %s'
