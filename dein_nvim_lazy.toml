@@ -21,6 +21,7 @@
 		nnoremap sC :<C-u>DeniteCursorWord -mode=normal -auto-highlight gtags_context<CR>
 		nnoremap sg :<C-u>Denite grep -mode=normal -auto-highlight -input=<CR>
 		nnoremap sp :<C-u>DeniteProjectDir grep -mode=normal -input=<CR>
+		nnoremap sP :<C-u>DeniteProjectDir file_rec -mode=normal<CR>
 		" nnoremap sd :<C-u>Denite -quit<CR>
 		nnoremap sr :<C-u>Denite -mode=normal -resume<CR>
 	'''
@@ -79,10 +80,14 @@
 	on_i = 1
 	hook_add = '''
 		let g:deoplete#enable_at_startup = 1
+		" tab-complete
+		inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+		inoremap <expr><S-tab> pumvisible() ? "\<c-p>" : "\<S-tab>"
 	'''
 
 [[plugins]]
-	repo = 'zchee/deoplete-clang'
+#	repo = 'zchee/deoplete-clang'
+	repo = 'tweekmonster/deoplete-clang2'
 	on_source = ['deoplete.nvim']
 
 [[plugins]]
