@@ -1,3 +1,9 @@
+#! /bin/bash
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+	. /etc/bashrc
+fi
+
 # show exit status at PS1
 function __show_status () {
 	ret=$?
@@ -65,7 +71,9 @@ shopt -s autocd
 shopt -s direxpand
 shopt -s dirspell
 shopt -s dotglob
+shopt -s globstar
 shopt -s nocaseglob
+stty stop undef
 
 ## use enhancd if available
 if [ -e ~/src/enhancd/init.sh ];then
@@ -76,14 +84,34 @@ fi
 export GOPATH=$HOME/go
 
 ## alias
+alias vi=vim
 alias nv=nvim
 alias c='cd ~'
 if [ `which fzy` ]; then 
 	alias fin='find . -type f | fzy --lines=100'
 fi
 
+alias ga='git add'
+alias gc='git commit'
+alias gd='git diff'
 alias gs='git status'
 alias gl='git log'
+
+alias ls='ls -axF --color=always'
+alias ll='ls -axl'
+
+alias less='less -R'
+export LESSOPEN='| /usr/bin/src-hilite-lesspipe.sh %s'
+alias grep='grep --with-filename --line-number --color=always'
+
+alias ..='$cd ..'
+alias ...='$cd ../..'
+alias cdp='cd $(git rev-parse --show-toplevel)'
+
+## completion
+if [ -e /usr/share/bash-completion/bash_completion ]; then
+	source /usr/share/bash-completion/bash_completion
+fi
 
 ## load local config
 if [ -e ~/.bashrc_local ]; then

@@ -1,3 +1,10 @@
-set completion-ignore-case on
 set colored-stats on
 set visible-stats on
+$if Bash
+set completion-ignore-case on
+Tab: complete
+Tab: menu-complete
+"\e[Z": menu-complete-backward
+set print-completions-horizontally on
+set show-all-if-ambiguous on
+$endif

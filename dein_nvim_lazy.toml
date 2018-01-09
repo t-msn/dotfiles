@@ -25,7 +25,7 @@
 		nnoremap sr :<C-u>Denite -mode=normal -resume<CR>
 	'''
 	hook_post_source = '''
-		call denite#custom#option('default', 'direction', 'top')
+		"call denite#custom#option('default', 'direction', 'top')
 		call denite#custom#option('default', 'prompt', '>')
 		call denite#custom#map('normal', 'l', '<CR>')
 		call denite#custom#map('normal', '<C-j>', '<C-w>j')
@@ -58,6 +58,7 @@
 	hook_add = '''
 		nnoremap ]v :<C-u>NERDTreeToggle<CR>
 
+		let g:NERDTreeShowBookmarks = 1
 		" let g:NERDTreeShowHidden = 1
 		let g:NERDTreeMapOpenSplit = 'S'
 		let g:NERDTreeMapOpenVSplit = 'V'
