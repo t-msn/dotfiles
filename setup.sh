@@ -3,7 +3,13 @@
 ln -s "$PWD/.bashrc" ~/.bashrc
 ln -s "$PWD/.bash_profile" ~/.bash_profile
 ln -s "$PWD/.inputrc" ~/.inputrc
+
 ln -s "$PWD/.tmux.conf" ~/.tmux.conf
+if [ $(uname) == 'Linux' ]; then
+	ln -s "$PWD/.tmux.conf.linux" ~/.tmux.conf.linux
+else if [ $(uname) == 'Darwin' ]; then
+	ln -s "$PWD/.tmux.conf.osx" ~/.tmux.conf.osx
+fi
 
 # vim
 mkdir -p ~/.config/vim

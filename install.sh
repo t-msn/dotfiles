@@ -11,11 +11,11 @@ if [ -e /etc/fedora-release ]; then
 	sudo dnf copr enable carlwgeorge/ripgrep
 	sudo dnf -y install ripgrep
 	sudo dnf install fzf
-	# sudo dnf -y install https://github.com/jhawthorn/fzy/releases/download/0.9/fzy-0.9-1.x86_64.rpm
-
-	mkdir src
-	git clone https://github.com/b4b4r07/enhancd.git src/enhancd
 else
-	echo 'nothing done'
-	exit 1
+	echo 'nothing specific done for this architecture'
 fi
+
+echo 'clone some git directories'
+mkdir ~/src
+git clone https://github.com/b4b4r07/enhancd.git ~/src/enhancd
+git clone https://github.com/thewtex/tmux-mem-cpu-load ~/src/tmux-mem-cpu-load
