@@ -129,71 +129,7 @@ __git_complete gd _git_diff
 __git_complete gs _git_status
 __git_complete gl _git_log
 
-function get_fs()
-{
-	local p="."
-	local i=1
-	while [ $i -le $# ];
-	do
-		if echo ${@: $i:1} | grep -qv "-"; then
-			p=${@: $i:1}
-			break
-		fi
-		i=$(( $i + 1 ))
-	done
-
-	echo $(stat -f -c %T $p)
-}
-
-function ls-btrfs()
-{
-	local fs=$(get_fs $@)
-	if [ $fs == 'btrfs' ]; then
-		# ls -axiF --color=always $@ | awk '{for (i=1; i<=NF; i+=2) {if ($i==256) {printf "\033[4m%s\t\033[m", $(i+1)} else {printf "%s\t", $(i+1)}}; printf "\n"}'
-		ls -axiF --color=always $@ | awk '{for (i=1; i<=NF; i+=2) {if ($i==256) {dir=$(i+1); gsub(/\x1B\[[0-9;]*[a-zA-Z]/,"", dir); printf "\033[4;36m"dir"\t\033[m"} else {printf "%s\t", $(i+1)}}; printf "\n"}'
-		# ls -axiF --color=always $@ | awk '{for (i=1; i<=NF; i++) {if ($i==256) {$0=gensub(/[^[:blank:]]+/, "\033[4m"$(i+1)"\033[m", i+1)}; $0=gensub(/[^[:blank:]]+/, "\t", i); }; print}'
-	else
-		ls -axF --color=always $@
-	fi
-}
-
-function ll-btrfs()
-{
-	local p="."
-	local i=1
-	while [ $i -le $# ];
-	do
-		if echo ${@: $i:1} | grep -qv "-"; then
-			p=${@: $i:1}
-			break
-		fi
-		i=$(( $i + 1 ))
-	done
-
-	local fs=$(stat -f -c %T $p)
-
-	# mark subvol with subvol id
-	if [ $fs == 'btrfs' ]; then
-		ls -axFlhi --color=always $@ | \
-		# awk '{if(NF>2) {{if ($1==256) {$1="SUB "} else {$1="    "}; print}} else {print}}'
-		# awk -v "p=$p" '{if(NF>2) {{if ($1==256) {v="SUBVOL\t"} else {v="\t"}; {print gensub (/[^[:blank:]]+/, v, 1)}}} else {print}}'
-		### clear color by sed and use gensub to keep space
-		# awk -v "p=$p" '{if(NF>2) {{if ($1==256) {dir=$10; gsub(/\x1B\[[0-9;]*[a-zA-Z]/,"", dir); dir2="\033[4m"$10"\033[m"; "btrfs ins rootid " p"/"dir | getline id; v=""id"\t"} else {v="\t"; dir2=$10}; {a=gensub(/[^[:blank:]]+/, v, 1); b=gensub(/[^[:blank:]]+/, dir2, 10, a); print b}}} else {print}}'
-		awk -v "p=$p" '{if(NF>2) {{if ($1==256) {dir=$10; gsub(/\x1B\[[0-9;]*[a-zA-Z]/,"", dir); dir2="\033[4;36m"dir"\033[m"; "btrfs ins rootid " p"/"dir | getline id; v=""id"\t"} else {v="\t"; dir2=$10}; {a=gensub(/[^[:blank:]]+/, dir2, 10); b=gensub(/[^[:blank:]]+/, v, 1, a); print b}}} else {print}}'
-	else
-		ls -axlh $@
-	fi
-}
-
-function tree-btrfs()
-{
-	local fs=$(get_fs $@)
-	if [ $fs == 'btrfs' ]; then
-		tree --inodes $@
-	else
-		tree $@
-	fi
-}
+source .bashrc-func
 
 if [ $(uname) == 'Darwin' ]; then
 	alias ls='ls -axFG' # mac
@@ -203,6 +139,8 @@ else
 	alias ls=ls-btrfs
 	alias ll=ll-btrfs
 	alias tree=tree-btrfs
+	alias lll=exa-btrfs-ll
+	alias treee=exa-btrfs-tree
 fi
 
 alias df='df -h'

@@ -1,10 +1,11 @@
 #!/bin/bash
 
-ln -s "$PWD/.bashrc" ~/.bashrc
-ln -s "$PWD/.bash_profile" ~/.bash_profile
-ln -s "$PWD/.inputrc" ~/.inputrc
+ln -sf "$PWD/.bashrc" ~/.bashrc
+ln -sf "$PWD/.bashrc-func" ~/.bashrc-func
+ln -sf "$PWD/.bash_profile" ~/.bash_profile
+ln -sf "$PWD/.inputrc" ~/.inputrc
 
-ln -s "$PWD/.tmux.conf" ~/.tmux.conf
+ln -sf "$PWD/.tmux.conf" ~/.tmux.conf
 if [ $(uname) == 'Linux' ]; then
 	ln -s "$PWD/.tmux.conf.linux" ~/.tmux.conf.linux
 else if [ $(uname) == 'Darwin' ]; then
