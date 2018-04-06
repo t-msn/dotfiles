@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 # linux only
 function get_fs()
@@ -121,4 +121,17 @@ function exa-btrfs-tree()
 	else
 		exa -lhgHT --git --color=always $@
 	fi
+}
+
+function apply-patchwork()
+{
+	set -o pipefail
+
+	cat /tmp/btrfs.list | \
+		fzf --vi-mode --no-sort --reverse --tac --multi --bind "ctrl-n:preview-down" --bind "ctrl-m:preview-up" \
+		--preview "(echo {} | cut -d ' ' -f 1 | xargs  pwclient view | colordiff)" | \
+		tac | cut -d ' ' -f 1 | \
+		xargs pwclient git-am
+
+		# --preview "echo {} | cut -d ' ' -f 1 | xargs sh -c 'html2text "https://patchwork.kernel.org/patch/{}/"' | less" | \
 }
