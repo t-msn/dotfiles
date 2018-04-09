@@ -20,6 +20,13 @@ if [ -e /usr/share/doc/git/contrib/completion/git-prompt.sh ]; then # linux (fed
 
 	GIT_PS1_SHOWDIRTYSTATE=true
 	export PS1='\[\033[32m\]\u@\h\[\033[00m\]:\[\033[34m\]\w\[\033[31m\]$(__git_ps1)\[\033[00m\]\[\033[31m\]$(__show_status)\[\033[00m\]\$ '
+elif [ -e /etc/bash_completion.d/git-prompt.sh ]; then # linux (open suse)
+	source /etc/bash_completion.d/git-prompt.sh
+	source /etc/bash_completion.d/git.sh
+
+	GIT_PS1_SHOWDIRTYSTATE=true
+	export PS1='\[\033[32m\]\u@\h\[\033[00m\]:\[\033[34m\]\w\[\033[31m\]$(__git_ps1)\[\033[00m\]\[\033[31m\]$(__show_status)\[\033[00m\]\$ '
+
 elif [ -e /usr/local/etc/bash_completion.d/git-prompt.sh ]; then # mac (brew)
 	source /usr/local/etc/bash_completion.d/git-prompt.sh
 	source /usr/local/etc/bash_completion.d/git-completion.bash
@@ -129,7 +136,7 @@ __git_complete gd _git_diff
 __git_complete gs _git_status
 __git_complete gl _git_log
 
-source .bashrc-func
+source ~/.bashrc-func
 
 if [ $(uname) == 'Darwin' ]; then
 	alias ls='ls -axFG' # mac

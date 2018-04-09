@@ -7,9 +7,9 @@ ln -sf "$PWD/.inputrc" ~/.inputrc
 
 ln -sf "$PWD/.tmux.conf" ~/.tmux.conf
 if [ $(uname) == 'Linux' ]; then
-	ln -s "$PWD/.tmux.conf.linux" ~/.tmux.conf.linux
-else if [ $(uname) == 'Darwin' ]; then
-	ln -s "$PWD/.tmux.conf.osx" ~/.tmux.conf.osx
+	ln -sf "$PWD/.tmux.conf.linux" ~/.tmux.conf.linux
+elif [ $(uname) == 'Darwin' ]; then
+	ln -sf "$PWD/.tmux.conf.osx" ~/.tmux.conf.osx
 fi
 
 # vim
