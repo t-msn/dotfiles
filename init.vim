@@ -4,19 +4,28 @@ if &compatible
 endif
 
 " fetch dein if not exists
-if !isdirectory(expand('~/.cache/repos/github.com/Shougo/dein.vim'))
-  let s:dein_repo_dir = '~/.cache/repos/github.com/Shougo/dein.vim'
-	execute '!mkdir -p ' . s:dein_repo_dir
-	execute '!git clone https://github.com/Shougo/dein.vim ' . s:dein_repo_dir
+let $CACHE = expand('~/.cache')
+if !isdirectory($CACHE)
+  call mkdir($CACHE, 'p')
+endif
+if &runtimepath !~# '/dein.vim'
+  let s:dein_dir = fnamemodify('dein.vim', ':p')
+  if !isdirectory(s:dein_dir)
+    let s:dein_dir = $CACHE .. '/dein/repos/github.com/Shougo/dein.vim'
+    if !isdirectory(s:dein_dir)
+      execute '!git clone https://github.com/Shougo/dein.vim' s:dein_dir
+    endif
+  endif
+  execute 'set runtimepath^=' .. substitute(
+        \ fnamemodify(s:dein_dir, ':p') , '[/\\]$', '', '')
 endif
 
-let s:dein_base = expand('~/.cache')
 let s:toml = expand('~/.config/nvim/dein_nvim.toml')
 let s:toml_lazy = expand('~/.config/nvim/dein_nvim_lazy.toml')
 set runtimepath+=~/.cache/repos/github.com/Shougo/dein.vim
 
-if dein#load_state(s:dein_base)
-	call dein#begin(s:dein_base)
+if dein#load_state($CACHE)
+	call dein#begin($CACHE)
 	call dein#load_toml(s:toml, {'lazy': 0})
 	call dein#load_toml(s:toml_lazy, {'lazy': 1})
 	
@@ -32,8 +41,9 @@ if dein#check_install()
 endif
 
 """"" color settings
-colorscheme molokai
-let g:molokai_original = 1
+colorscheme everforest
+"colorscheme molokai
+"let g:molokai_original = 1
 let g:rehash256 = 1
 " set background=dark
 
@@ -95,7 +105,7 @@ set backspace=indent,eol,start
 set lcs=tab:>.,eol:$,trail:_,extends:\
 
 " yank
-set clipboard=unnamedplus,unnamed
+"set clipboard=unnamedplus,unnamed
 
 """"" key remap
 nnoremap ,<space> :e ~/.config/nvim/init.vim<CR> 

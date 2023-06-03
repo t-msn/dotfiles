@@ -1,16 +1,9 @@
 #!/bin/bash
 
 ln -sf "$PWD/.bashrc" ~/.bashrc
-ln -sf "$PWD/.bashrc-func" ~/.bashrc-func
 ln -sf "$PWD/.bash_profile" ~/.bash_profile
 ln -sf "$PWD/.inputrc" ~/.inputrc
-
 ln -sf "$PWD/.tmux.conf" ~/.tmux.conf
-if [ $(uname) == 'Linux' ]; then
-	ln -sf "$PWD/.tmux.conf.linux" ~/.tmux.conf.linux
-elif [ $(uname) == 'Darwin' ]; then
-	ln -sf "$PWD/.tmux.conf.osx" ~/.tmux.conf.osx
-fi
 
 # vim
 mkdir -p ~/.config/vim

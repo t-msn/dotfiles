@@ -1,4 +1,0 @@
-set -g status-right " #[fg=colour247] \
-										| #(~/src/tmux-mem-cpu-load/tmux-mem-cpu-load --interval 3 -g 0 -a 0 -t 1) |\
-											#(uptime | cut -d ' ' -f 2- | sed 's/ load averages://g') | \
-											#(uname -r) 🌏#[default]"

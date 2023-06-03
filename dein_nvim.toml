@@ -14,7 +14,6 @@
 		call submode#map('move-window', 'n', '', 'k', '<C-w>-')
 		call submode#map('move-window', 'n', '', 'h', '<C-w>>')
 		call submode#map('move-window', 'n', '', 'l', '<C-w><')
-		" window transparency
 		call submode#enter_with('transparency', 'n', '', '.t', '<Nop>')
 		call submode#leave_with('transparency', 'n', '', '<Esc>')
 		call submode#map('transparency', 'n', '', 'k', ':let &transparency += 1<CR>')
@@ -37,13 +36,13 @@
 		let g:submode_timeoutlen = 10000
 	'''
 
-[[plugins]]
-	repo = 'taku-o/vim-toggle'
-	hook_add = '''
-		nmap <C-C> <Plug>ToggleN
-		imap <C-C> <Plug>ToggleI
-		vmap <C-C> <Plug>ToggleV
-	'''
+# [[plugins]]
+# 	repo = 'taku-o/vim-toggle'
+# 	hook_add = '''
+# 		nmap <C-C> <Plug>ToggleN
+# 		imap <C-C> <Plug>ToggleI
+# 		vmap <C-C> <Plug>ToggleV
+# 	'''
 
 [[plugins]]
 	repo = 'tomtom/tcomment_vim'
@@ -57,6 +56,12 @@
 	repo = 'tomasr/molokai'
 
 [[plugins]]
+	repo = 'sickill/vim-monokai'
+
+[[plugins]]
+	repo = 'sainnhe/everforest'
+
+[[plugins]]
 	repo = 'vim-scripts/Solarized' 
 
 [[plugins]]
@@ -68,7 +73,7 @@
 [[plugins]]
 	repo = 'tpope/vim-fugitive'
 	hook_add = '''
-		nnoremap bl :Gblame<CR>
+		nnoremap bl :Git blame<CR>
 	'''
 
 [[plugins]]
@@ -109,4 +114,118 @@
 		
 		set laststatus=2   " Always show the statusline
 		set encoding=utf-8 " Necessary to show Unicode glyphs
+	'''
+
+[[plugins]]
+	repo = 'nvim-lua/plenary.nvim'
+[[plugins]]
+	repo = 'neoclide/coc.nvim'
+	rev = 'release'
+	merged = 0
+	hook_add = '''
+		" Use tab for trigger completion with characters ahead and navigate
+		" NOTE: There's always complete item selected by default, you may want to enable
+		" no select by `"suggest.noselect": true` in your configuration file
+		" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+		" other plugin before putting this into your config
+		"inoremap <silent><expr> <TAB>
+		"      \ coc#pum#visible() ? coc#pum#next(1) :
+		"      \ CheckBackspace() ? "\<Tab>" :
+		"      \ coc#refresh()
+		"inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+		" Make <CR> to accept selected completion item or notify coc.nvim to format
+		" <C-g>u breaks current undo, please make your own choice
+		inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+		                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+		inoremap <silent><expr> <C-j> coc#pum#visible() ? coc#pum#confirm()
+		                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+		" Use K to show documentation in preview window
+		nnoremap <silent> K :call ShowDocumentation()<CR>
+		function! ShowDocumentation()
+		  if CocAction('hasProvider', 'hover')
+		    call CocActionAsync('doHover')
+		  else
+		    call feedkeys('K', 'in')
+		  endif
+		endfunction
+
+
+		" Highlight the symbol and its references when holding the cursor
+		autocmd CursorHold * silent call CocActionAsync('highlight')
+
+
+		" Formatting selected code
+		xmap sF  <Plug>(coc-format-selected)
+		nmap sF  <Plug>(coc-format-selected)
+	'''
+[[plugins]]
+	repo = 'fannheyward/telescope-coc.nvim'
+	depends = ['neoclide/coc.nvim']
+	hook_add = '''
+		let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-clangd']
+	'''
+[[plugins]]
+	repo = 'kkharji/sqlite.lua'
+[[plugins]]
+	repo = 'nvim-telescope/telescope-frecency.nvim'
+[[plugins]]
+	repo = 'tree-sitter/tree-sitter'
+
+[[plugins]]
+	repo = 'nvim-telescope/telescope.nvim'
+	rev = '0.1.x'
+	depends = ['nvim-lua/plenary.nvim', 'fannheyward/telescope-coc.nvim']
+	hook_add = '''
+		" there should be better way to handle this...
+		function! Get_git_root() abort
+			let root = system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+			let dir =  isdirectory(root) ? root : fnamemodify(root, ':h')
+			return dir
+		endfunction
+
+		nnoremap sr <cmd>Telescope resume<CR>
+		nnoremap sb <cmd>Telescope buffers<CR>
+		nnoremap sf <cmd>Telescope frecency<CR>
+
+		nnoremap sg <cmd>lua require('telescope.builtin').find_files()<CR>
+		nnoremap su <cmd>lua require('telescope.builtin').find_files( { cwd = vim.fn.Get_git_root() })<CR>
+		nnoremap sp <cmd>lua require('telescope.builtin').live_grep( { cwd = vim.fn.Get_git_root()})<CR>
+		nnoremap sP <cmd>lua require('telescope.builtin').grep_string( { cwd = vim.fn.Get_git_root()})<CR>
+
+		nnoremap sT <cmd>Telescope coc type_definitions<CR>
+		nnoremap sG <cmd>Telescope coc definitions<CR>
+		nnoremap sR <cmd>Telescope coc references_used<CR>
+	'''
+
+	lua_add = '''
+		require("telescope").setup({
+			defaults = {
+				initial_mode = 'normal',
+				layout_strategy = 'vertical',
+				mappings = {
+					n = {
+						q = "close",
+						qq = "close",
+						["<esc>"] = "close",
+						["<C-c>"] = "close",
+						S = "file_split",
+						s = "file_split",
+						V = "file_vsplit",
+						v = "file_vsplit",
+					},
+					i = {
+						["<C-c>"] = "close",
+					},
+				},
+			},
+			extensions = {
+				coc = {
+					prefer_locations = true, -- always use Telescope locations to preview definitions/declarations/implementations etc
+				}
+			},
+		})
+		require('telescope').load_extension('coc')
+		require('telescope').load_extension('frecency')
 	'''

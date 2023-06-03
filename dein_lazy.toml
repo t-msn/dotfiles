@@ -1,106 +1,421 @@
+### Settings for unite.vim
+# [[plugins]]
+# 	repo = 'Shougo/unite.vim'
+# 	hook_add = '''
+# 		let g:unite_source_history_yank_enable = 1
+#
+# 		nnoremap sh :<C-u>Unite history/yank<CR>
+# 		nnoremap su :<C-u>Unite file_mru file buffer<CR>
+# 		nnoremap sf :<C-u>Unite -buffer-name=files file_rec<CR>
+# 		nnoremap sc :<C-u>UniteWithCurrentDir file<CR>
+# 		nnoremap sm :<C-u>Unite change -winheight=15 -no-quit -keep-focus<CR>
+# 		nnoremap sv :<C-u>Unite bookmark<CR>
+# 		nnoremap sb :<C-u>Unite buffer<CR>
+# 		nnoremap so :<C-u>Unite outline -winheight=15 -no-quit<CR>
+# 		nnoremap sl :<C-u>Unite line -winheight=15 -no-quit -input=
+# 		nnoremap sL :<C-u>Unite line -winheight=15 -no-quit -input=<C-R><C-W><CR>
+# 		nnoremap sj :<C-u>Unite -winheight=15 -no-quit jump<CR>
+# 		nnoremap sd :<C-u>UniteClose default<CR>
+# 		nnoremap sr :<C-u>UniteResume<CR>
+# 		nnoremap st :<C-u>Unite tag -start-insert<CR>
+# 		nnoremap sG :<C-u>Unite gtags/context -no-quit -winwidth=10<CR>
+# 		nnoremap sR :<C-u>Unite gtags/grep -no-quit -winwidth=10 -input=<C-R><C-W><CR>
+# 		" nnoremap sp :<C-u>call <SID>unite_project('-start-insert')<CR>
+# 		nnoremap sp :<C-u>UniteWithProjectDir file_rec<CR>
+# 		nnoremap mm :<C-u>Unite mark<CR>
+# 		nnoremap md :<C-u>delmarks!<CR>
+#
+# 		let g:unite_source_grep_max_candidates = 6000
+# 		if executable('ag')
+# 	  " Use ag in unite grep source.
+# 			let g:unite_source_grep_command = 'ag'
+# 			 let g:unite_source_grep_default_opts =
+# 			 \ '-i --line-numbers --nocolor --nogroup --hidden --ignore ''.git'' '
+# 			 let g:unite_source_grep_recursive_opt = ''
+# 		endif
+# 		" grep within a git project
+# 		nnoremap sg :<C-u>call <SID>unite_project_grep()<CR>
+# 		function! s:unite_project_grep(...)
+# 		  let opts = (a:0 ? join(a:000, ' ') : '')
+# 		  let dir  = unite#util#path2project_directory(expand('%'))
+# 		  execute 'Unite' opts 'grep:' . dir
+# 		endfunction
+#
+# 		" open by split window holizontaly
+# 		au FileType unite nnoremap <silent> <buffer> <expr> S unite#do_action('split')
+# 		au FileType unite inoremap <silent> <buffer> <expr> S unite#do_action('split')
+# 		" open by splitting window vertically
+# 		au FileType unite nnoremap <silent> <buffer> <expr> V unite#do_action('vsplit')
+# 		au FileType unite inoremap <silent> <buffer> <expr> V unite#do_action('vsplit')
+# 		" exit with double ESC key
+# 		au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
+# 		au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
+# 	'''
+#
+# [[plugins]]
+# 	repo = 'Shougo/unite-session'
+# 	on_source = ['unite.vim']
+#
+# [[plugins]]
+# 	repo = 'Shougo/unite-outline'
+# 	on_source = ['unite.vim']
+#
+# [[plugins]]
+# 	repo = 'Shougo/neomru.vim'
+# 	on_source = ['unite.vim']
+#
+# [[plugins]]
+# 	repo = 'ujihisa/unite-colorscheme'
+# 	on_source = ['unite.vim']
+#
+# [[plugins]]
+# 	repo = 'ujihisa/unite-font'
+# 	on_source = ['unite.vim']
+#
+# [[plugins]]
+# 	repo = 'tsukkee/unite-tag'
+# 	on_source = ['unite.vim']
+#
+# [[plugins]]
+# 	repo = 'hewes/unite-gtags'
+# 	on_source = ['unite.vim']
+# 	hook_add = '''
+# 		let g:unite_source_gtags_project_config = {
+# 					\ '_' : { 'treelize':1, 'absolute_path':1,
+# 					\        'gtags_libpath': ['/usr/local/bin/']}
+# 					\	}
+# 	'''
+#
+# [[plugins]]
+# 	repo = 'Shougo/vimfiler'
+# 	hook_add = '''
+# 		nnoremap ,vf :VimFiler<CR>
+# 		let g:vimfiler_as_default_explorer=1
+# 		let g:vimfiler_safe_mode_by_default=0
+# 		nnoremap ]v :VimFilerBufferDir -split -simple -winwidth=30 -no-quit<CR>
+#
+# 		au FileType vimfiler nnoremap <silent><buffer><expr> V vimfiler#do_switch_action('vsplit')
+# 		au FileType vimfiler nnoremap <silent><buffer><expr> S vimfiler#do_switch_action('split')
+# 		
+# 		" exit by double ESC key
+# 		au FileType vimfiler nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
+# 		au FileType vimfiler inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
+# 		au FileType vimfiler nnoremap <silent> <buffer> <C-l> <C-w>l
+# 	'''
+
+## settings for ddc
+## Note: deno (https://deno.com) needs to be installed
 [[plugins]]
-	repo = 'Shougo/unite.vim'
+	repo = 'vim-denops/denops.vim'
+
+[[plugins]]
+	repo = 'Shougo/ddc-ui-native'
+	on_source = 'ddc.vim'
+[[plugins]]
+	repo = 'Shougo/ddc-source-around'
+	on_source = 'ddc.vim'
+[[plugins]]
+	repo = 'Shougo/ddc-matcher_head'
+	on_source = 'ddc.vim'
+[[plugins]]
+	repo = 'Shougo/ddc-sorter_rank'
+	on_source = 'ddc.vim'
+[[plugins]]
+	repo = 'LumaKernel/ddc-source-file'
+	on_source = 'ddc.vim'
+
+[[plugins]]
+	repo = 'Shougo/ddc.vim'
+  # from github README
 	hook_add = '''
-		let g:unite_source_history_yank_enable = 1
+	" Customize global settings
 
-		nnoremap sh :<C-u>Unite history/yank<CR>
-		nnoremap su :<C-u>Unite file_mru file buffer<CR>
-		nnoremap sf :<C-u>Unite -buffer-name=files file_rec<CR>
-		nnoremap sc :<C-u>UniteWithCurrentDir file<CR>
-		nnoremap sm :<C-u>Unite change -winheight=15 -no-quit -keep-focus<CR>
-		nnoremap sv :<C-u>Unite bookmark<CR>
-		nnoremap sb :<C-u>Unite buffer<CR>
-		nnoremap so :<C-u>Unite outline -winheight=15 -no-quit<CR>
-		nnoremap sl :<C-u>Unite line -winheight=15 -no-quit -input=
-		nnoremap sL :<C-u>Unite line -winheight=15 -no-quit -input=<C-R><C-W><CR>
-		nnoremap sj :<C-u>Unite -winheight=15 -no-quit jump<CR>
-		nnoremap sd :<C-u>UniteClose default<CR>
-		nnoremap sr :<C-u>UniteResume<CR>
-		nnoremap st :<C-u>Unite tag -start-insert<CR>
-		nnoremap sG :<C-u>Unite gtags/context -no-quit -winwidth=10<CR>
-		nnoremap sR :<C-u>Unite gtags/grep -no-quit -winwidth=10 -input=<C-R><C-W><CR>
-		" nnoremap sp :<C-u>call <SID>unite_project('-start-insert')<CR>
-		nnoremap sp :<C-u>UniteWithProjectDir file_rec<CR>
-		nnoremap mm :<C-u>Unite mark<CR>
-		nnoremap md :<C-u>delmarks!<CR>
+	" You must set the default ui.
+	" https://github.com/Shougo/ddc-ui-native
+	call ddc#custom#patch_global('ui', 'native')
 
-		let g:unite_source_grep_max_candidates = 6000
-		if executable('ag')
-	  " Use ag in unite grep source.
-			let g:unite_source_grep_command = 'ag'
-			 let g:unite_source_grep_default_opts =
-			 \ '-i --line-numbers --nocolor --nogroup --hidden --ignore ''.git'' '
-			 let g:unite_source_grep_recursive_opt = ''
-		endif
-		" grep within a git project
-		nnoremap sg :<C-u>call <SID>unite_project_grep()<CR>
-		function! s:unite_project_grep(...)
-		  let opts = (a:0 ? join(a:000, ' ') : '')
-		  let dir  = unite#util#path2project_directory(expand('%'))
-		  execute 'Unite' opts 'grep:' . dir
+	" Use around source.
+	" https://github.com/Shougo/ddc-source-around
+	call ddc#custom#patch_global('sources', ['around', 'file'])
+
+	" file source
+	call ddc#custom#patch_global('sourceOptions', {
+	    \ 'file': {
+	    \   'mark': 'F',
+	    \   'isVolatile': v:true,
+	    \   'forceCompletionPattern': '\S/\S*',
+	    \ }})
+
+	" Use matcher_head and sorter_rank.
+	" https://github.com/Shougo/ddc-matcher_head
+	" https://github.com/Shougo/ddc-sorter_rank
+	call ddc#custom#patch_global('sourceOptions', #{
+		      \ _: #{
+						      \   matchers: ['matcher_head'],
+									      \   sorters: ['sorter_rank']},
+												      \ })
+
+	" Change source options
+	call ddc#custom#patch_global('sourceOptions', #{
+		      \   around: #{ mark: 'A' },
+					      \ })
+	call ddc#custom#patch_global('sourceParams', #{
+		      \   around: #{ maxSize: 500 },
+					      \ })
+
+	" Customize settings on a filetype
+	"call ddc#custom#patch_filetype(['c', 'cpp'], 'sources',
+	"      \ ['around', 'clangd'])
+	"call ddc#custom#patch_filetype(['c', 'cpp'], 'sourceOptions', #{
+	"	      \   clangd: #{ mark: 'C' },
+	"				      \ })
+	"call ddc#custom#patch_filetype('markdown', 'sourceParams', #{
+	"	      \   around: #{ maxSize: 100 },
+	"				      \ })
+
+	" Mappings
+	" <TAB>: completion.
+	"inoremap <silent><expr> <TAB>
+	"\ pumvisible() ? '<C-n>' :
+	"\ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+	"\ '<TAB>' : ddc#map#manual_complete()
+
+	" <S-TAB>: completion back.
+	"inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
+
+	" Use ddc.
+	call ddc#enable()
+	'''
+
+## settings for ddu
+[[plugins]]
+	repo = 'Shougo/ddu-source-rg'
+	on_source = 'ddu.vim'
+[[plugins]]
+	repo = 'Shougo/ddu-source-file'
+	on_source = 'ddu.vim'
+[[plugins]]
+	repo = 'Shougo/ddu-source-file_rec'
+	on_source = 'ddu.vim'
+[[plugins]]
+	repo = 'Shougo/ddu-kind-file'
+	on_source = 'ddu.vim'
+[[plugins]]
+	repo = 'Shougo/ddu-filter-matcher_substring'
+	on_source = 'ddu.vim'
+[[plugins]]
+	repo = 'Shougo/ddu-ui-filer'
+	on_source = 'ddu.vim'
+[[plugins]]
+	repo = 'Shougo/ddu-ui-ff'
+	on_source = 'ddu.vim'
+[[plugins]]
+	repo = 'Shougo/ddu-source-buffer'
+	on_source = 'ddu.vim'
+[[plugins]]
+	repo = 'kaz-oji/ddu-source-gtags'
+	on_source = 'ddu.vim'
+[[plugins]]
+	repo = 'kuuote/ddu-source-mr'
+	on_source = 'ddu.vim'
+[[plugins]]
+	repo = 'lambdalisue/mr.vim'
+	on_source = 'ddu.vim'
+[[plugins]]
+	repo = 'Shougo/ddu.vim'
+	hook_add = '''
+	" Set dfault UI
+	call ddu#custom#patch_global({
+	    \ 'ui': 'ff',
+	    \ })
+
+	" Set default action
+	call ddu#custom#patch_global({
+		    \   'kindOptions': {
+		    \     'file': {
+		    \       'defaultAction': 'open',
+		    \     },
+		    \   }
+		    \ })
+
+	" Set matcher
+	call ddu#custom#patch_global({
+		    \   'sourceOptions': {
+		    \     '_': {
+		    \       'matchers': ['matcher_substring'],
+		    \     },
+		    \   }
+		    \ })
+
+	" Set default sources
+	call ddu#custom#patch_global({
+			\ 'sources': [{'name': 'file_rec', 'params': {}}],
+			\ })
+
+  " ddu-source-rg
+	call ddu#custom#patch_global({
+		\   'sourceParams' : {
+		\     'rg' : {
+		\       'args': ['--json'],
+		\     },
+		\   },
+		\ })
+
+  " key settings
+	autocmd FileType ddu-ff call s:ddu_my_settings()
+		function! s:ddu_my_settings() abort
+		  nnoremap <buffer><silent> <CR>
+				\ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+		  nnoremap <buffer><silent> o
+				\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'open'})<CR>
+		  nnoremap <buffer><silent> p
+				\ <Cmd>call ddu#ui#ff#do_action('preview')<CR>
+		  nnoremap <buffer><silent> s
+				\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'open', 'params': {'command': 'split'}})<CR>
+		  nnoremap <buffer><silent> S
+				\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'open', 'params': {'command': 'split'}})<CR>
+		  nnoremap <buffer><silent> v
+				\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'open', 'params': {'command': 'vsplit'}})<CR>
+		  nnoremap <buffer><silent> V
+				\ <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'open', 'params': {'command': 'vsplit'}})<CR>
+			nnoremap <buffer><silent> <Space>
+				\ <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
+		  nnoremap <buffer><silent> i
+				\ <Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
+			nnoremap <buffer><silent> q
+				\ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
 		endfunction
 
-		" open by split window holizontaly
-		au FileType unite nnoremap <silent> <buffer> <expr> S unite#do_action('split')
-		au FileType unite inoremap <silent> <buffer> <expr> S unite#do_action('split')
-		" open by splitting window vertically
-		au FileType unite nnoremap <silent> <buffer> <expr> V unite#do_action('vsplit')
-		au FileType unite inoremap <silent> <buffer> <expr> V unite#do_action('vsplit')
-		" exit with double ESC key
-		au FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
-		au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
+	autocmd FileType ddu-ff-filter call s:ddu_filter_my_settings()
+		function! s:ddu_filter_my_settings() abort
+		inoremap <buffer><silent> <CR>
+			\ <Esc><Cmd>close<CR>
+		nnoremap <buffer><silent> <CR>
+			\ <Cmd>close<CR>
+		nnoremap <buffer><silent> q
+			\ <Cmd>close<CR>
+		endfunction
+
+	nnoremap <silent> su
+		\ <Cmd>call ddu#start({})<CR>
+	nnoremap <silent> sr
+		\ <Cmd>call ddu#start({'resume': v:true})<CR>
+	nnoremap <silent> sb
+		\ <Cmd>call ddu#start({'sources': [{'name': 'buffer'}]})<CR>
+	nnoremap <silent> sG
+		\ <Cmd>call ddu#start({'sources': [{'name': 'gtags', 'params': {'input': expand('<cword>')}}]})<CR>
+	nnoremap <silent> sR
+		\ <Cmd>call ddu#start({'sources': [{'name': 'gtags', 'params': {'input': expand('<cword>'), 'args': '-r'}}]})<CR>
+	nnoremap <silent> sf
+		\ <Cmd>call ddu#start({'sources': [{'name': 'mr'}]})<CR>
+
+
+	""" settings for rg
+	function! s:ddu_rg_from_root() abort
+		let root = system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+		let dir =  isdirectory(root) ? root : fnamemodify(root, ':h')
+		let word = expand('<cword>')
+	  call ddu#start({
+			\ 'sources': [{
+			\		'name': 'rg',
+			\		'params': {'input': word, 'path': dir}}
+			\	]})
+	endfunction
+	command! DduRGRoot call s:ddu_rg_from_root()
+	nnoremap <silent> sP :DduRGRoot<CR>
+
+	function! s:ddu_rg_from_root_input() abort
+		let root = system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+		let dir =  isdirectory(root) ? root : fnamemodify(root, ':h')
+		let word = input("search word: ")
+	  call ddu#start({
+			\ 'sources': [{
+			\		'name': 'rg',
+			\		'params': {'input': word, 'path': dir}}
+			\	]})
+	endfunction
+
+	" grep under project dir
+	command! DduRGRootInput call s:ddu_rg_from_root_input()
+	nnoremap <silent> sl :DduRGRootInput<CR>
+
+	" grep under current dir
+	nnoremap <silent> sg :DduRg<CR>
+
+
+  """ settigns for filer ui
+	call ddu#custom#patch_local('filer', {
+	    \ 'ui': 'filer',
+			\ 'sources': [
+			\		{
+			\			'name': 'file',
+			\			'params': {},
+			\		},
+			\ ],
+			\ 'kindOptions': {
+			\		'filer': {
+			\			'defaultAction': 'open',
+			\		},
+			\	},
+			\ 'uiOptions': {
+			\   'filer': {
+			\			'persist': v:true,
+			\   	'toggle': v:true,
+			\   }
+			\ },
+			\ 'uiParams': {
+			\   'filer': {
+			\     'winWidth': 40,
+			\     'split': 'vertical',
+			\     'splitDirection': 'topleft',
+			\   }
+			\ },
+	    \ })
+
+	autocmd FileType ddu-filer call s:ddu_filer_my_settings()
+	function! s:ddu_filer_my_settings() abort
+	  nnoremap <buffer><silent><expr> <CR>
+		    \ ddu#ui#get_item()->get('isTree', v:false) ?
+				\ "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'narrow'})<CR>" :
+				\ "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'open'})<CR>"
+	  nnoremap <buffer><silent><expr> o
+		    \ ddu#ui#get_item()->get('isTree', v:false) ?
+				\ "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'narrow'})<CR>" :
+				\ "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'open'})<CR>"
+	  nnoremap <buffer><silent><expr> s
+		    \ ddu#ui#get_item()->get('isTree', v:false) ?
+				\ "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'narrow'})<CR>" :
+				\ "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'open', 'params': {'command': 'split'}})<CR>"
+	  nnoremap <buffer><silent><expr> v
+		    \ ddu#ui#get_item()->get('isTree', v:false) ?
+				\ "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'narrow'})<CR>" :
+				\ "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'open', 'params': {'command': 'vsplit'}})<CR>"
+
+	  nnoremap <buffer><silent><expr> l
+		    \ ddu#ui#get_item()->get('isTree', v:false) ?
+				\ "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'narrow'})<CR>" :
+				\ "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'open'})<CR>"
+		nnoremap <buffer><silent> h
+			\ <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'narrow', 'params': {'path': '..'}})<CR>
+
+		nnoremap <buffer><silent> q
+			\ <Cmd>call ddu#ui#filer#do_action('quit')<CR>
+		nnoremap <buffer><silent> ..
+			\ <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'narrow', 'params': {'path': '..'}})<CR>
+	endfunction
+
+	nnoremap <silent> ]v
+		\ <Cmd>call ddu#start({
+		\		'name': 'filer',
+		\ })<CR>
 	'''
 
 [[plugins]]
-	repo = 'Shougo/unite-session'
-	on_source = ['unite.vim']
+	repo = 'Shougo/ddu-commands.vim'
+	on_source = 'ddu.vim'
 
-[[plugins]]
-	repo = 'Shougo/unite-outline'
-	on_source = ['unite.vim']
-
-[[plugins]]
-	repo = 'Shougo/neomru.vim'
-	on_source = ['unite.vim']
-
-[[plugins]]
-	repo = 'ujihisa/unite-colorscheme'
-	on_source = ['unite.vim']
-
-[[plugins]]
-	repo = 'ujihisa/unite-font'
-	on_source = ['unite.vim']
-
-[[plugins]]
-	repo = 'tsukkee/unite-tag'
-	on_source = ['unite.vim']
-
-[[plugins]]
-	repo = 'hewes/unite-gtags'
-	on_source = ['unite.vim']
-	hook_add = '''
-		let g:unite_source_gtags_project_config = {
-					\ '_' : { 'treelize':1, 'absolute_path':1,
-					\        'gtags_libpath': ['/usr/local/bin/']}
-					\	}
-	'''
-
-[[plugins]]
-	repo = 'Shougo/vimfiler'
-	hook_add = '''
-		nnoremap ,vf :VimFiler<CR>
-		let g:vimfiler_as_default_explorer=1
-		let g:vimfiler_safe_mode_by_default=0
-		nnoremap ]v :VimFilerBufferDir -split -simple -winwidth=30 -no-quit<CR>
-
-		au FileType vimfiler nnoremap <silent><buffer><expr> V vimfiler#do_switch_action('vsplit')
-		au FileType vimfiler nnoremap <silent><buffer><expr> S vimfiler#do_switch_action('split')
-		
-		" exit by double ESC key
-		au FileType vimfiler nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
-		au FileType vimfiler inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
-		au FileType vimfiler nnoremap <silent> <buffer> <C-l> <C-w>l
-	'''
+# [[plugins]]
+# 	repo = 'mattn/vim-findroot'
 
 [[plugins]]
 	repo = 'fuenor/JpFormat.vim'
@@ -165,45 +480,6 @@
 		let g:ref_source_webdict_sites.default = 'wikipedia:ja'
 		nnoremap ,a :Ref webdict alc 
 	'''
-
-[[plugins]]
-	repo = 'Shougo/neocomplete.vim'
-	hook_add = '''
-    let g:neocomplete#enable_at_startup = 1
-    let g:neocomplete#enable_ignore_case = 1
-    let g:neocomplete#enable_smart_case = 1
-    if !exists('g:neocomplete#keyword_patterns')
-        let g:neocomplete#keyword_patterns = {}
-    endif
-    let g:neocomplete#keyword_patterns._ = '\h\w*'
-
-		inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-		inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-	'''
-
-[[plugins]]
-	repo = 'Shougo/neosnippet'
-	hook_add = '''
-		imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-		smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-		xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-		" SuperTab like snippets behavior.
-		imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-		\ "\<Plug>(neosnippet_expand_or_jump)"
-		\: pumvisible() ? "\<C-n>" : "\<TAB>"
-		smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-		\ "\<Plug>(neosnippet_expand_or_jump)"
-		\: "\<TAB>"
-		
-		" For snippet_complete marker.
-		if has('conceal')
-		  set conceallevel=2 concealcursor=i
-		endif
-	'''
-
-[[plugins]]
-	repo = 'Shougo/neosnippet-snippets'
 
 [[plugins]]
 	repo = 'vim-scripts/Align'

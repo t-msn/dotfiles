@@ -26,13 +26,6 @@ elif [ -e /etc/bash_completion.d/git-prompt.sh ]; then # linux (open suse)
 
 	GIT_PS1_SHOWDIRTYSTATE=true
 	export PS1='\[\033[32m\]\u@\h\[\033[00m\]:\[\033[34m\]\w\[\033[31m\]$(__git_ps1)\[\033[00m\]\[\033[31m\]$(__show_status)\[\033[00m\]\$ '
-
-elif [ -e /usr/local/etc/bash_completion.d/git-prompt.sh ]; then # mac (brew)
-	source /usr/local/etc/bash_completion.d/git-prompt.sh
-	source /usr/local/etc/bash_completion.d/git-completion.bash
-
-	GIT_PS1_SHOWDIRTYSTATE=true
-	export PS1='\[\033[32m\]\u@\h\[\033[00m\]:\[\033[34m\]\w\[\033[31m\]$(__git_ps1)\[\033[00m\]\[\033[31m\]$(__show_status)\[\033[00m\]\$ '
 else
 	export PS1='\[\033[32m\]\u@\h\[\033[00m\]:\[\033[34m\]\w\[\033[31m\]$(__show_status)\[\033[00m\]\$ '
 fi
@@ -40,8 +33,7 @@ fi
 # change tmux window name to it's runnning command name
 case "${TERM}" in
 	screen*)
-		# export PROMPT_COMMAND='printf "\033k$PWD\033\\"'
-		# ;;
+		#export PROMPT_COMMAND='printf "\033k$PWD\033\\"'
 
 		## automatically rename tmux pane to current command
 		# function that performs the title update (invoked as PROMPT_COMMAND)
@@ -62,6 +54,7 @@ export HISTCONTROL=ignoredups:erasedups
 shopt -s histappend
 # After each command, append to the history file and reread it
 export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
+
 # use filter command (fzy) for C-r
 if [ `which fzf` ]; then 
 	function select-history() {
@@ -98,9 +91,10 @@ if [ `which fzf` ]; then
 		fi
 	}
 
+	alias fzf='fzf --reverse'
 fi
 
-## enable bash options
+#enable bash options
 shopt -s autocd
 shopt -s direxpand
 shopt -s dirspell
@@ -112,13 +106,10 @@ stty werase undef
 bind '\C-w:unix-filename-rubout'
 
 ## use enhancd if available
-export ENHANCD_FILTER="fzf --reverse --height=15:fzy:peco"
 if [ -e ~/src/enhancd/init.sh ];then
 	source ~/src/enhancd/init.sh
+  export ENHANCD_FILTER="fzf --reverse --height=15:fzy:peco"
 fi
-
-## PATH
-export GOPATH=$HOME/go
 
 ## alias
 alias vi=vim
@@ -136,20 +127,7 @@ __git_complete gd _git_diff
 __git_complete gs _git_status
 __git_complete gl _git_log
 
-source ~/.bashrc-func
-
-if [ $(uname) == 'Darwin' ]; then
-	alias ls='ls -axFG' # mac
-	alias ll='ls -axlh'
-else
-	# alias ls='ls -axF --color=always'
-	alias ls=ls-btrfs
-	alias ll=ll-btrfs
-	alias tree=tree-btrfs
-	alias lll=exa-btrfs-ll
-	alias treee=exa-btrfs-tree
-fi
-
+alias ls='ls -axF --color=always'
 alias df='df -h'
 
 alias less='less -R'
@@ -160,12 +138,17 @@ alias ..='$cd ..'
 alias ...='$cd ../..'
 alias cdp='cd $(git rev-parse --show-toplevel)'
 
-alias fzf='fzf --reverse'
-
 ## completion
 if [ -e /usr/share/bash-completion/bash_completion ]; then
 	source /usr/share/bash-completion/bash_completion
 fi
+
+# debuginfod
+export DEBUGINFOD_URLS="https://debuginfod.elfutils.org/"
+export DEBUGINFOD_PROGRESS=1
+
+## PATH
+export GOPATH=$HOME/go
 
 ## load local config
 if [ -e ~/.bashrc_local ]; then

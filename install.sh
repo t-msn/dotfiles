@@ -1,17 +1,11 @@
 #!/bin/bash
 
 if [ -e /etc/fedora-release ]; then
-	sudo dnf -y install git vim-enhanced neovim tmux bash-completion cmake
-	sudo pip3 install neovim
+	sudo dnf -y install git vim-enhanced neovim python3-neovim tmux bash-completion cmake
+	sudo dnf -y install ripgrep fzf fd-find
 
-	# for deoplete
-	sudo pip3 install jedi
-	sudo dnf -y install clang
-
-	sudo dnf copr enable carlwgeorge/ripgrep
-	sudo dnf -y install ripgrep
-	sudo dnf install fzf
 elif [ -e /etc/SUSE-brand ]; then
+	# needs update
 	sudo zypper install -y tmux neovim cmake
 	sudo pip3 install jedi
 	sudo zypper install -y clang
